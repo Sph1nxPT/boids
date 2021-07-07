@@ -1,6 +1,7 @@
 #pragma once
-class SDL_Window;
-class SDL_Surface;
+struct SDL_Window;
+struct SDL_Surface;
+struct SDL_Renderer;
 
 class Window {
 public:
@@ -11,6 +12,7 @@ private:
 
 	SDL_Window* _SDLWindow;
 	SDL_Surface* _SDLScreenSurface;
+	SDL_Renderer* _SDLRenderer;
 
 public:
 	Window(int width, int height);
@@ -20,6 +22,8 @@ public:
 	bool loadResources();
 	void update();
 	void close();
+
+	SDL_Renderer* getRenderer();
 
 private:
 };

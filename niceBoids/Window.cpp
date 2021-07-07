@@ -5,6 +5,7 @@
 Window::Window(int width, int height) : _width(width), _height(height) {
 	_SDLWindow = nullptr;
 	_SDLScreenSurface = nullptr;
+	_SDLRenderer = nullptr;
 }
 
 Window::~Window() {
@@ -38,6 +39,7 @@ bool Window::init()
 		else
 		{
 			_SDLScreenSurface = SDL_GetWindowSurface(_SDLWindow);
+			_SDLRenderer = SDL_CreateRenderer(_SDLWindow, -1, SDL_RENDERER_ACCELERATED);
 		}
 	}
 
@@ -78,3 +80,6 @@ void Window::close()
 	SDL_Quit();
 }
 
+SDL_Renderer* Window::getRenderer() {
+	return _SDLRenderer;
+}
