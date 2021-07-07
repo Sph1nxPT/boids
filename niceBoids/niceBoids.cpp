@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include <Window.h>
 
 const int SCREEN_WIDTH = 1024;
@@ -15,15 +16,7 @@ int main(int argc, char* args[])
 	}
 	else
 	{
-		//Load media
-		if (!view.loadResources())
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{
-			view.update();
-		}
+		view.simulate();
 	}
 
 	return 0;

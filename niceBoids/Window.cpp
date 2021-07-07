@@ -1,4 +1,6 @@
 #include <Window.h>
+#include <World.h>
+
 #include <SDL.h>
 #include <stdio.h>
 
@@ -31,7 +33,7 @@ bool Window::init()
 									  _height, 
 			                          SDL_WINDOW_SHOWN);
 
-		if (_SDLWindow == NULL)
+		if (_SDLWindow == nullptr)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			success = false;
@@ -46,17 +48,13 @@ bool Window::init()
 	return success;
 }
 
-bool Window::loadResources()
-{
-	bool success = true;
-	return success;
-}
-
-void Window::update()
+void Window::simulate()
 {
 	bool quit = false;
 
 	SDL_Event e;
+
+	World world(_width, _height);
 
 	while (!quit) {
 		while (SDL_PollEvent(&e) != 0) {
@@ -65,21 +63,29 @@ void Window::update()
 			}
 		}
 
-		//Update the surface
-		SDL_UpdateWindowSurface(_SDLWindow);
+		world.update();
+
+		clear();
+		world.draw(_SDLRenderer);
+
+		SDL_RenderPresent(_SDLRenderer);
 	}
+}
+
+void Window::clear() {
+	SDL_SetRenderDrawColor(_SDLRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(_SDLRenderer);
 }
 
 void Window::close()
 {
 	//Destroy window
 	SDL_DestroyWindow(_SDLWindow);
-	_SDLWindow = NULL;
+	_SDLWindow = nullptr;
+
+	SDL_DestroyRenderer(_SDLRenderer);
+	_SDLRenderer = nullptr;
 
 	//Quit SDL subsystems
 	SDL_Quit();
-}
-
-SDL_Renderer* Window::getRenderer() {
-	return _SDLRenderer;
 }

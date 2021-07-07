@@ -19,11 +19,10 @@ public:
 	~Window();
 
 	bool init();
-	bool loadResources();
-	void update();
+	void simulate();
 	void close();
 
-	SDL_Renderer* getRenderer();
-
 private:
+
+	void clear();
 };
