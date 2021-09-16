@@ -1,8 +1,6 @@
 #include "Boid.h"
 #include <SDL.h>
 
-Boid::Boid(float x, float y, float radius) : _x(x), _y(y) , _r(radius) {}
-
 void Boid::draw(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 

@@ -4,7 +4,7 @@ struct SDL_Renderer;
 class Boid
 {
 public:
-	Boid(float x, float y, float radius);
+	Boid(float x, float y, float radius) : _x(x), _y(y), _r(radius) {};
 
 	void draw(SDL_Renderer* renderer);
 

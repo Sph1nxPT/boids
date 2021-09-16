@@ -1,9 +1,5 @@
 #include "World.h"
 
-World::World(int width, int height) : _width(width), _height(height) {
-
-}
-
 void World::initializeWorld() {
 	_boids.emplace_back(_width * 0.5f, _height * 0.5f, 2.0f);
 }

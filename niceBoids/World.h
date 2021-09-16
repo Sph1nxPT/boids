@@ -7,7 +7,7 @@ struct SDL_Renderer;
 class World
 {
 	public:
-		World(int width, int height);
+		World(int width, int height) : _width(width), _height(height) {};
 
 		void initializeWorld();
 		void update();
