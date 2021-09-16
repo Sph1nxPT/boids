@@ -13,10 +13,10 @@ void Boid::draw(SDL_Renderer* renderer) {
     status = 0;
 
     while (offsety >= offsetx) {
-        status += SDL_RenderDrawLine(renderer, _x - offsety, _y + offsetx, _x + offsety, _y + offsetx);
-        status += SDL_RenderDrawLine(renderer, _x - offsetx, _y + offsety, _x + offsetx, _y + offsety);
-        status += SDL_RenderDrawLine(renderer, _x - offsetx, _y - offsety, _x + offsetx, _y - offsety);
-        status += SDL_RenderDrawLine(renderer, _x - offsety, _y - offsetx, _x + offsety, _y - offsetx);
+        status += SDL_RenderDrawLine(renderer, _position.X() - offsety, _position.Y() + offsetx, _position.X() + offsety, _position.Y() + offsetx);
+        status += SDL_RenderDrawLine(renderer, _position.X() - offsetx, _position.Y() + offsety, _position.X() + offsetx, _position.Y() + offsety);
+        status += SDL_RenderDrawLine(renderer, _position.X() - offsetx, _position.Y() - offsety, _position.X() + offsetx, _position.Y() - offsety);
+        status += SDL_RenderDrawLine(renderer, _position.X() - offsety, _position.Y() - offsetx, _position.X() + offsety, _position.Y() - offsetx);
 
         if (status < 0) {
             status = -1;
@@ -36,5 +36,26 @@ void Boid::draw(SDL_Renderer* renderer) {
             offsety -= 1;
             offsetx += 1;
         }
+    }
+}
+
+void Boid::update(float deltaTime) {
+    _position = _position + _velocity * deltaTime;
+}
+
+void Boid::clampPositionInSpace(float xi, float xf, float yi, float yf) {
+
+    if (_position.X() > xf) {
+        _position.setX(xi);
+    }
+    else if (_position.X() < xi) {
+        _position.setX(xf);
+    }
+
+    if (_position.Y() > yf) {
+        _position.setY(yi);
+    }
+    else if (_position.Y() < yi) {
+        _position.setY(yf);
     }
 }
