@@ -3,7 +3,7 @@ struct SDL_Window;
 struct SDL_Surface;
 struct SDL_Renderer;
 
-class Window {
+class Engine {
 public:
 
 private:
@@ -15,8 +15,8 @@ private:
 	SDL_Renderer* _SDLRenderer;
 
 public:
-	Window(int width, int height);
-	~Window();
+	Engine(int width, int height);
+	~Engine();
 
 	bool init();
 	void simulate();

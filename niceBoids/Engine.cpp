@@ -1,20 +1,20 @@
-#include <Window.h>
+#include <Engine.h>
 #include <World.h>
 
 #include <SDL.h>
 #include <stdio.h>
 
-Window::Window(int width, int height) : _width(width), _height(height) {
+Engine::Engine(int width, int height) : _width(width), _height(height) {
 	_SDLWindow = nullptr;
 	_SDLScreenSurface = nullptr;
 	_SDLRenderer = nullptr;
 }
 
-Window::~Window() {
+Engine::~Engine() {
 	close();
 }
 
-bool Window::init()
+bool Engine::init()
 {
 	bool success = true;
 
@@ -48,9 +48,11 @@ bool Window::init()
 	return success;
 }
 
-void Window::simulate()
+void Engine::simulate()
 {
 	bool quit = false;
+	unsigned int frameTime = 0;
+	unsigned int deltaTime = 0;
 
 	SDL_Event e;
 
@@ -59,13 +61,16 @@ void Window::simulate()
 	world.initializeWorld();
 
 	while (!quit) {
+		deltaTime = SDL_GetTicks() - frameTime;
+		frameTime = SDL_GetTicks();
+
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 				quit = true;
 			}
 		}
 
-		world.update();
+		world.update(deltaTime / 1000.0f);
 
 		clear();
 		world.draw(_SDLRenderer);
@@ -74,12 +79,12 @@ void Window::simulate()
 	}
 }
 
-void Window::clear() {
+void Engine::clear() {
 	SDL_SetRenderDrawColor(_SDLRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(_SDLRenderer);
 }
 
-void Window::close()
+void Engine::close()
 {
 	//Destroy window
 	SDL_DestroyWindow(_SDLWindow);
