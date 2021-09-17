@@ -14,9 +14,6 @@ class World
 		void draw(SDL_Renderer* renderer);
 
 	private:
-		void clampPosition(Boid& boid);
-		float clamp(float value, float max);
-
 		int _width;
 		int _height;
 

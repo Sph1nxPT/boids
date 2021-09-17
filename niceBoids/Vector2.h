@@ -5,7 +5,7 @@
 class Vector2
 {
 public:
-	Vector2() = default;
+	Vector2() { _x = 0.0f, _y = 0.0f; };
 	Vector2(float x, float y) : _x(x), _y(y) {};
 
 	float X() const { return _x; };
@@ -27,6 +27,7 @@ public:
 	Vector2 normalize() const { float len = this->length(); return Vector2(_x / len, _y / len); };
 
 	static float dot(const Vector2& v1, const Vector2& v2) { return v1.X() * v2.X() + v1.Y() * v2.Y(); };
+	static float distance(const Vector2& v1, const Vector2& v2) { return (v2 - v1).length(); }
 
 private:
 	float _x;

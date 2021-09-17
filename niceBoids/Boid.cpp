@@ -1,6 +1,10 @@
 #include "Boid.h"
 #include <SDL.h>
 
+#define PERCEPTION_RADIUS 100
+
+unsigned int Boid::_idCount = 0;
+
 void Boid::draw(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
@@ -40,6 +44,7 @@ void Boid::draw(SDL_Renderer* renderer) {
 }
 
 void Boid::update(float deltaTime) {
+    _velocity = _velocity + _acceleration * deltaTime;
     _position = _position + _velocity * deltaTime;
 }
 
@@ -58,4 +63,26 @@ void Boid::clampPositionInSpace(float xi, float xf, float yi, float yf) {
     else if (_position.Y() < yi) {
         _position.setY(yf);
     }
+}
+
+void Boid::align(const std::vector<Boid> boids) {
+    Vector2 steeringForce;
+    int total = 0;
+
+    for (const Boid& other : boids) {
+
+        float distance = Vector2::distance(_position, other.getPosition());
+
+        if (other != *this && distance < PERCEPTION_RADIUS) {
+            steeringForce = steeringForce + other.getVelocity();
+            total++;
+        }
+
+    }
+    if (total > 0) {
+        steeringForce = steeringForce / total;
+        steeringForce = steeringForce - _velocity;
+    }
+
+    _acceleration = steeringForce;
 }
