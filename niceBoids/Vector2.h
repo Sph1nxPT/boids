@@ -24,7 +24,10 @@ public:
 	Vector2 operator/(const float& scalar) const { return Vector2(_x / scalar, _y / scalar); };
 
 	float length() const { return std::sqrt(_x*_x + _y*_y); };
-	Vector2 normalize() const { float len = this->length(); return Vector2(_x / len, _y / len); };
+
+	void normalize();
+	void setMagnitude(float newMagnitude);
+	void limitMagnitude(float limit);
 
 	static float dot(const Vector2& v1, const Vector2& v2) { return v1.X() * v2.X() + v1.Y() * v2.Y(); };
 	static float distance(const Vector2& v1, const Vector2& v2) { return (v2 - v1).length(); }
